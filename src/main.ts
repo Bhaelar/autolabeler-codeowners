@@ -7,7 +7,7 @@ import {applyLabels} from './applyLabels'
 
 async function run(): Promise<void> {
   try {
-    const client = new github.GitHub(core.getInput('githubToken'))
+    const client = github.getOctokit(core.getInput('token'))
 
     // get all paths (file paths) changed in the PR
     const paths: string[] = await getChangedFiles(github.context, client)
@@ -24,7 +24,7 @@ async function run(): Promise<void> {
     // apply the set of labels to the PR
     await applyLabels(github.context, client, labels)
   } catch (error) {
-    core.setFailed(error.message)
+    core.setFailed((error as Error).message)
   }
 }
 
