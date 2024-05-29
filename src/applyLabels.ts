@@ -1,10 +1,9 @@
 import {Context} from '@actions/github/lib/context'
-import * as octokit from '@octokit/rest'
 import {Label} from './getLabelsFromOwners'
 
 export async function applyLabels(
   context: Context,
-  client: octokit.Octokit,
+  client: any,
   labels: Set<Label>
 ): Promise<void> {
   // create labels if they don't exist
