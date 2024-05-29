@@ -1,3 +1,4 @@
+import * as core from '@actions/core'
 import {Context} from '@actions/github/lib/context'
 import * as octokit from '@octokit/rest'
 
@@ -13,7 +14,7 @@ export async function getChangedFiles(
     throw new Error(`Unexpected event: ${context.eventName}`)
   }
 
-  console.log("context: ", context)
+  core.info(`context: ${context.issue.owner}/${context.issue.repo}#${context.issue.number}`)
   // Note: the per_page param is set to the max value for a single page (100)
   // TODO: implement pagination to get all files if > 100
   // TODO: use graphql api
