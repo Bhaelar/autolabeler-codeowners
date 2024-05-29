@@ -1,5 +1,6 @@
 import * as core from '@actions/core'
 import {Context} from '@actions/github/lib/context'
+import * as octokit from '@octokit/rest'
 
 type FileObject = {
   filename: string
@@ -7,7 +8,7 @@ type FileObject = {
 
 export async function getChangedFiles(
   context: Context,
-  client: any,
+  client: octokit.Octokit,
 ): Promise<string[]> {
   if (!['push', 'pull_request'].includes(context.eventName)) {
     throw new Error(`Unexpected event: ${context.eventName}`)
