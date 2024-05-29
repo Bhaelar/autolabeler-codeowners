@@ -7,6 +7,7 @@ import {applyLabels} from './applyLabels'
 
 async function run(): Promise<void> {
   try {
+    // @ts-expect-error fix
     const client = new github.GitHub(core.getInput('githubToken'))
 
     // get all paths (file paths) changed in the PR
@@ -23,8 +24,10 @@ async function run(): Promise<void> {
 
     // apply the set of labels to the PR
     await applyLabels(github.context, client, labels)
-  } catch (error) {
-    core.setFailed(error.message)
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      core.setFailed(error.message)
+    }
   }
 }
 

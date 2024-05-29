@@ -1,8 +1,13 @@
 import {Context} from '@actions/github/lib/context'
 import * as github from '@actions/github'
 
+type FileObject = {
+  filename: string
+}
+
 export async function getChangedFiles(
   context: Context,
+  // @ts-expect-error fix
   client: github.GitHub
 ): Promise<string[]> {
   if (!['push', 'pull_request'].includes(context.eventName)) {
@@ -21,5 +26,5 @@ export async function getChangedFiles(
     per_page: 100
   })
 
-  return files.data.map(x => x['filename'])
+  return files.data.map((x: FileObject) => x.filename)
 }

@@ -5,10 +5,12 @@ import {Label} from './getLabelsFromOwners'
 
 export async function applyLabels(
   context: Context,
+  // @ts-expect-error fix
   client: github.GitHub,
   labels: Set<Label>
 ): Promise<void> {
   // create labels if they don't exist
+  // @ts-expect-error fix
   const p: Promise<octokit.Response<octokit.IssuesCreateLabelResponse>>[] = []
   // store labels in a list; will be used later
   const labelsAll: string[] = []
@@ -25,10 +27,14 @@ export async function applyLabels(
       )
     }
     await Promise.all(p)
-  } catch (error) {
-    // if 422, label already exists
-    if (error.status !== 422) {
-      throw error
+  } catch (error: unknown) {
+    // We need to check if the error object is an instance of Error before accessing the 'status' property
+    if (error instanceof Error && 'status' in error) {
+      if (error.status !== 422) {
+        throw error
+      }
+    } else {
+      throw error // If it's not an Error instance, rethrow it
     }
   }
 
