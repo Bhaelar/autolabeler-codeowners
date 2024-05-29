@@ -1,5 +1,4 @@
 import {Context} from '@actions/github/lib/context'
-import * as github from '@actions/github'
 
 type FileObject = {
   filename: string
@@ -7,8 +6,17 @@ type FileObject = {
 
 export async function getChangedFiles(
   context: Context,
-  // @ts-ignore
-  client: github.GitHub
+  client: {
+    pulls: {
+      listFiles: (arg0: {
+        owner: string; repo: string
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        pull_number: number
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        per_page: number
+      }) => any
+    }
+  }
 ): Promise<string[]> {
   if (!['push', 'pull_request'].includes(context.eventName)) {
     throw new Error(`Unexpected event: ${context.eventName}`)
