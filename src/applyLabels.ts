@@ -1,24 +1,21 @@
 import {Context} from '@actions/github/lib/context'
-import * as github from '@actions/github'
 import * as octokit from '@octokit/rest'
 import {Label} from './getLabelsFromOwners'
 
 export async function applyLabels(
   context: Context,
-  // @ts-expect-error fix
-  client: github.GitHub,
+  client: octokit.Octokit,
   labels: Set<Label>
 ): Promise<void> {
   // create labels if they don't exist
-  // @ts-expect-error fix
-  const p: Promise<octokit.Response<octokit.IssuesCreateLabelResponse>>[] = []
+  const p = []
   // store labels in a list; will be used later
   const labelsAll: string[] = []
   try {
     for (const label of labels) {
       labelsAll.push(label.name)
       p.push(
-        client.issues.createLabel({
+        client.rest.issues.createLabel({
           owner: context.issue.owner,
           repo: context.issue.repo,
           name: label.name,
@@ -43,7 +40,7 @@ export async function applyLabels(
   if (labelsAll.length === 0) {
     return
   }
-  await client.issues.addLabels({
+  await client.rest.issues.addLabels({
     owner: context.issue.owner,
     repo: context.issue.repo,
     // eslint-disable-next-line @typescript-eslint/camelcase
