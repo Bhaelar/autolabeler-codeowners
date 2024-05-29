@@ -18,7 +18,7 @@ export async function getChangedFiles(
   // Note: the per_page param is set to the max value for a single page (100)
   // TODO: implement pagination to get all files if > 100
   // TODO: use graphql api
-  const files = await client.pulls.listFiles({
+  const files = await client.rest.pulls.listFiles({
     owner: context.issue.owner,
     repo: context.issue.repo,
     // eslint-disable-next-line @typescript-eslint/camelcase

@@ -15,7 +15,7 @@ export async function applyLabels(
     for (const label of labels) {
       labelsAll.push(label.name)
       p.push(
-        client.issues.createLabel({
+        client.rest.issues.createLabel({
           owner: context.issue.owner,
           repo: context.issue.repo,
           name: label.name,
@@ -40,7 +40,7 @@ export async function applyLabels(
   if (labelsAll.length === 0) {
     return
   }
-  await client.issues.addLabels({
+  await client.rest.issues.addLabels({
     owner: context.issue.owner,
     repo: context.issue.repo,
     // eslint-disable-next-line @typescript-eslint/camelcase
