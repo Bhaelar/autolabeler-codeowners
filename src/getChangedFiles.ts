@@ -13,6 +13,7 @@ export async function getChangedFiles(
     throw new Error(`Unexpected event: ${context.eventName}`)
   }
 
+  console.log("context: ", context)
   // Note: the per_page param is set to the max value for a single page (100)
   // TODO: implement pagination to get all files if > 100
   // TODO: use graphql api
