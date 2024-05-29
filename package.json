@@ -4,7 +4,6 @@
   "private": true,
   "description": "Label PRs based on CODEOWNERS file",
   "main": "lib/main.js",
-  "type": "module",
   "scripts": {
     "build": "tsc",
     "format": "prettier --write **/*.ts",
