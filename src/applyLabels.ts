@@ -5,12 +5,12 @@ import {Label} from './getLabelsFromOwners'
 
 export async function applyLabels(
   context: Context,
-  // @ts-expect-error fix
+  // @ts-ignore
   client: github.GitHub,
   labels: Set<Label>
 ): Promise<void> {
   // create labels if they don't exist
-  // @ts-expect-error fix
+  // @ts-ignore
   const p: Promise<octokit.Response<octokit.IssuesCreateLabelResponse>>[] = []
   // store labels in a list; will be used later
   const labelsAll: string[] = []

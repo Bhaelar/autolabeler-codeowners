@@ -7,7 +7,7 @@ import {applyLabels} from './applyLabels'
 
 async function run(): Promise<void> {
   try {
-    // @ts-expect-error fix
+    // @ts-ignore
     const client = new github.GitHub(core.getInput('githubToken'))
 
     // get all paths (file paths) changed in the PR

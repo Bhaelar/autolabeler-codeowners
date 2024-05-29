@@ -7,7 +7,7 @@ type FileObject = {
 
 export async function getChangedFiles(
   context: Context,
-  // @ts-expect-error fix
+  // @ts-ignore
   client: github.GitHub
 ): Promise<string[]> {
   if (!['push', 'pull_request'].includes(context.eventName)) {
