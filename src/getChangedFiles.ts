@@ -1,4 +1,5 @@
 import {Context} from '@actions/github/lib/context'
+import * as octokit from '@octokit/rest'
 
 type FileObject = {
   filename: string
@@ -6,17 +7,7 @@ type FileObject = {
 
 export async function getChangedFiles(
   context: Context,
-  client: {
-    pulls: {
-      listFiles: (arg0: {
-        owner: string; repo: string
-        // eslint-disable-next-line @typescript-eslint/camelcase
-        pull_number: number
-        // eslint-disable-next-line @typescript-eslint/camelcase
-        per_page: number
-      }) => any
-    }
-  }
+  client: octokit.Octokit,
 ): Promise<string[]> {
   if (!['push', 'pull_request'].includes(context.eventName)) {
     throw new Error(`Unexpected event: ${context.eventName}`)

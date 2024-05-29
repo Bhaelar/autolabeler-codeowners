@@ -1,17 +1,10 @@
 import {Context} from '@actions/github/lib/context'
+import * as octokit from '@octokit/rest'
 import {Label} from './getLabelsFromOwners'
 
 export async function applyLabels(
   context: Context,
-  client: {
-    issues: {
-      createLabel: (arg0: { owner: string; repo: string; name: string; color: string }) => any; addLabels: (arg0: {
-        owner: string; repo: string
-        // eslint-disable-next-line @typescript-eslint/camelcase
-        issue_number: number; labels: string[]
-      }) => any
-    }
-  },
+  client: octokit.Octokit,
   labels: Set<Label>
 ): Promise<void> {
   // create labels if they don't exist
